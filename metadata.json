@@ -1,0 +1,6 @@
+{
+  "name": "Makani | Location d'Espaces à l'Heure à Alger",
+  "description": "Plateforme de réservation d'espaces uniques à Alger : salles de réunion, studios photo, rooftops, villas de réception et ateliers créatifs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

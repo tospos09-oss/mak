@@ -1,0 +1,54 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-arabic: 'Cairo', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  [dir="rtl"] {
+    font-family: var(--font-arabic);
+  }
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 {
+    font-family: var(--font-arabic);
+    letter-spacing: normal;
+  }
+}
+
+/* Custom scrollbars and styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Leaflet map styles */
+.leaflet-container {
+  font-family: var(--font-sans) !important;
+  z-index: 10;
+}
+.custom-map-pin {
+  background: none;
+  border: none;
+}
