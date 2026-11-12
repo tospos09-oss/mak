@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Space, Booking } from '../../types';
+import { useApp } from '../../context/AppContext';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface AvailabilityCalendarReadOnlyProps {
@@ -15,16 +16,25 @@ export const AvailabilityCalendarReadOnly: React.FC<AvailabilityCalendarReadOnly
   selectedDate,
   onSelectDate,
 }) => {
+  const { language } = useApp();
+
   // Current month view state (November 2026 based on mock timeline)
   const [currentYear, setCurrentYear] = useState(2026);
   const [currentMonth, setCurrentMonth] = useState(10); // 0-indexed, 10 = Nov
 
-  const monthNames = [
+  const monthNamesFr = [
     'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
     'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
   ];
+  const monthNamesEn = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
 
-  const daysOfWeek = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+  const monthNames = language === 'en' ? monthNamesEn : monthNamesFr;
+  const daysOfWeek = language === 'en' 
+    ? ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    : ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {

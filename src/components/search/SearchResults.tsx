@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
+import { translations } from '../../i18n/translations';
 import { SpaceCard } from '../home/SpaceCard';
 import { COMMUNE_LIST, CATEGORY_METADATA } from '../../data/mockData';
 import { ActivityCategory, AlgiersCommune } from '../../types';
@@ -14,10 +15,26 @@ import {
 } from 'lucide-react';
 
 export const SearchResults: React.FC = () => {
-  const { filteredSpaces, filters, setFilters, resetFilters } = useApp();
+  const { filteredSpaces, filters, setFilters, resetFilters, language } = useApp();
+  const t = translations[language];
 
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [sortBy, setSortBy] = useState<'recommended' | 'price_asc' | 'price_desc'>('recommended');
+
+  const getActivityLabel = (key: ActivityCategory, defaultLabel: string) => {
+    if (language !== 'en') return defaultLabel;
+    switch (key) {
+      case 'reunion': return t.actMeeting;
+      case 'conference': return t.actConference;
+      case 'formation': return t.actWorkshop;
+      case 'shooting': return t.actPhoto;
+      case 'evenement': return t.actEvent;
+      case 'tournage': return t.actFilming;
+      case 'coworking': return t.actCoworking;
+      case 'podcast': return t.actPodcast;
+      default: return defaultLabel;
+    }
+  };
 
   // Sorting
   const sortedSpaces = [...filteredSpaces].sort((a, b) => {
@@ -54,13 +71,13 @@ export const SearchResults: React.FC = () => {
               <select
                 value={filters.activity}
                 onChange={(e) => handleActivityChange(e.target.value as any)}
-                aria-label="Sélectionner l'activité"
+                aria-label={t.searchWhat}
                 className="h-10 px-3.5 pr-8 rounded-full border border-[#E5E2DD] bg-[#F7F5F2] hover:bg-white text-xs font-semibold text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#D9532B] appearance-none cursor-pointer"
               >
-                <option value="all">Toutes les activités</option>
+                <option value="all">{t.allActivities}</option>
                 {activityEntries.map(([k, v]) => (
                   <option key={k} value={k}>
-                    {v.label}
+                    {getActivityLabel(k, v.label)}
                   </option>
                 ))}
               </select>
@@ -72,10 +89,10 @@ export const SearchResults: React.FC = () => {
               <select
                 value={filters.commune}
                 onChange={(e) => handleCommuneChange(e.target.value as any)}
-                aria-label="Sélectionner la commune d'Alger"
+                aria-label={t.searchWhere}
                 className="h-10 px-3.5 pr-8 rounded-full border border-[#E5E2DD] bg-[#F7F5F2] hover:bg-white text-xs font-semibold text-[#111111] focus:outline-none focus:ring-2 focus:ring-[#D9532B] appearance-none cursor-pointer"
               >
-                <option value="all">Toutes les communes d'Alger</option>
+                <option value="all">{t.allCommunes}</option>
                 {COMMUNE_LIST.map((c) => (
                   <option key={c} value={c}>
                     {c}
@@ -100,7 +117,7 @@ export const SearchResults: React.FC = () => {
             {/* Guests count */}
             <div className="relative shrink-0 hidden md:flex items-center h-10 px-3.5 rounded-full border border-[#E5E2DD] bg-[#F7F5F2] hover:bg-white text-xs font-semibold text-[#111111] gap-1.5">
               <Users className="w-3.5 h-3.5 text-[#6B6B6B]" />
-              <span>{filters.guests} pers.</span>
+              <span>{filters.guests} {language === 'en' ? 'guests' : 'pers.'}</span>
             </div>
 
             {/* Reset filter button if active */}
@@ -110,7 +127,7 @@ export const SearchResults: React.FC = () => {
                 className="h-10 px-3 rounded-full text-xs font-semibold text-[#D9532B] hover:bg-[#D9532B]/10 flex items-center gap-1.5 transition-colors shrink-0 cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Réinitialiser</span>
+                <span>{language === 'en' ? 'Reset' : 'Réinitialiser'}</span>
               </button>
             )}
           </div>
@@ -122,12 +139,12 @@ export const SearchResults: React.FC = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                aria-label="Trier les résultats"
+                aria-label={language === 'en' ? 'Sort results' : 'Trier les résultats'}
                 className="h-10 px-3.5 pr-8 rounded-full border border-[#E5E2DD] bg-white text-xs font-semibold text-[#111111] focus:outline-none cursor-pointer appearance-none"
               >
-                <option value="recommended">Recommandés</option>
-                <option value="price_asc">Prix croissant</option>
-                <option value="price_desc">Prix décroissant</option>
+                <option value="recommended">{language === 'en' ? 'Recommended' : 'Recommandés'}</option>
+                <option value="price_asc">{language === 'en' ? 'Price: Low to High' : 'Prix croissant'}</option>
+                <option value="price_desc">{language === 'en' ? 'Price: High to Low' : 'Prix décroissant'}</option>
               </select>
               <ChevronDown className="w-3.5 h-3.5 text-[#6B6B6B] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
@@ -138,7 +155,7 @@ export const SearchResults: React.FC = () => {
               className="sm:hidden h-10 px-3.5 rounded-full border border-[#E5E2DD] bg-[#F7F5F2] flex items-center gap-1.5 text-xs font-semibold text-[#111111] cursor-pointer"
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Filtres</span>
+              <span>{language === 'en' ? 'Filters' : 'Filtres'}</span>
             </button>
           </div>
         </div>
@@ -150,9 +167,10 @@ export const SearchResults: React.FC = () => {
         {/* Count and Results Summary */}
         <div className="flex items-center justify-between mb-8">
           <div className="text-sm text-[#6B6B6B]">
-            <span className="font-bold text-[#111111]">{sortedSpaces.length}</span> espaces disponibles à Alger
+            <span className="font-bold text-[#111111]">{sortedSpaces.length}</span>{' '}
+            {language === 'en' ? 'spaces available in Algiers' : 'espaces disponibles à Alger'}
             {filters.commune !== 'all' && <span> · {filters.commune}</span>}
-            {filters.activity !== 'all' && <span> · {CATEGORY_METADATA[filters.activity]?.label}</span>}
+            {filters.activity !== 'all' && <span> · {getActivityLabel(filters.activity, CATEGORY_METADATA[filters.activity]?.label || '')}</span>}
           </div>
         </div>
 
@@ -163,16 +181,18 @@ export const SearchResults: React.FC = () => {
               <Search className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-[#111111] mb-2 font-display">
-              Aucun espace ne correspond à ces critères
+              {language === 'en' ? 'No spaces match these criteria' : 'Aucun espace ne correspond à ces critères'}
             </h3>
             <p className="text-xs text-[#6B6B6B] mb-6">
-              Essayez d'élargir votre recherche en sélectionnant toutes les communes ou une autre catégorie d'activité.
+              {language === 'en'
+                ? 'Try broadening your search by choosing all districts or another activity type.'
+                : "Essayez d'élargir votre recherche en sélectionnant toutes les communes ou une autre catégorie d'activité."}
             </p>
             <button
               onClick={resetFilters}
               className="px-6 py-2.5 rounded-full bg-[#111111] hover:bg-[#D9532B] text-white text-xs font-semibold transition-colors cursor-pointer"
             >
-              Voir tous les espaces
+              {language === 'en' ? 'View all spaces' : 'Voir tous les espaces'}
             </button>
           </div>
         ) : (
@@ -189,7 +209,9 @@ export const SearchResults: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4">
           <div className="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-3xl p-6 max-h-[85vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-[#E5E2DD] mb-5">
-              <span className="text-base font-bold text-[#111111] font-display">Filtres de recherche</span>
+              <span className="text-base font-bold text-[#111111] font-display">
+                {language === 'en' ? 'Search Filters' : 'Filtres de recherche'}
+              </span>
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="p-1 text-[#6B6B6B] hover:text-[#111111]"
@@ -201,18 +223,18 @@ export const SearchResults: React.FC = () => {
             {/* Activity selection */}
             <div className="mb-5">
               <label className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wider">
-                Activité
+                {language === 'en' ? 'Activity' : 'Activité'}
               </label>
               <select
                 value={filters.activity}
                 onChange={(e) => handleActivityChange(e.target.value as any)}
-                aria-label="Filtrer par activité"
+                aria-label={language === 'en' ? 'Filter by activity' : 'Filtrer par activité'}
                 className="w-full h-11 px-3 rounded-xl border border-[#E5E2DD] text-sm font-semibold"
               >
-                <option value="all">Toutes les activités</option>
+                <option value="all">{t.allActivities}</option>
                 {activityEntries.map(([k, v]) => (
                   <option key={k} value={k}>
-                    {v.label}
+                    {getActivityLabel(k, v.label)}
                   </option>
                 ))}
               </select>
@@ -221,15 +243,15 @@ export const SearchResults: React.FC = () => {
             {/* Commune selection */}
             <div className="mb-5">
               <label className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wider">
-                Commune d'Alger
+                {language === 'en' ? 'Algiers District' : "Commune d'Alger"}
               </label>
               <select
                 value={filters.commune}
                 onChange={(e) => handleCommuneChange(e.target.value as any)}
-                aria-label="Filtrer par commune"
+                aria-label={language === 'en' ? 'Filter by district' : 'Filtrer par commune'}
                 className="w-full h-11 px-3 rounded-xl border border-[#E5E2DD] text-sm font-semibold"
               >
-                <option value="all">Toutes les communes</option>
+                <option value="all">{t.allCommunes}</option>
                 {COMMUNE_LIST.map((c) => (
                   <option key={c} value={c}>
                     {c}
@@ -241,7 +263,7 @@ export const SearchResults: React.FC = () => {
             {/* Date selection */}
             <div className="mb-5">
               <label className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wider">
-                Date souhaitée
+                {language === 'en' ? 'Desired Date' : 'Date souhaitée'}
               </label>
               <input
                 type="date"
@@ -255,7 +277,7 @@ export const SearchResults: React.FC = () => {
             {/* Guests */}
             <div className="mb-6">
               <label className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wider">
-                Nombre de personnes
+                {language === 'en' ? 'Number of guests' : 'Nombre de personnes'}
               </label>
               <input
                 type="number"
@@ -273,13 +295,13 @@ export const SearchResults: React.FC = () => {
                 onClick={resetFilters}
                 className="flex-1 py-3 text-xs font-semibold text-[#6B6B6B] hover:text-[#111111]"
               >
-                Réinitialiser
+                {language === 'en' ? 'Reset' : 'Réinitialiser'}
               </button>
               <button
                 onClick={() => setMobileFilterOpen(false)}
                 className="flex-1 py-3 bg-[#D9532B] text-white rounded-full text-xs font-bold shadow-md cursor-pointer"
               >
-                Appliquer ({sortedSpaces.length})
+                {language === 'en' ? `Apply (${sortedSpaces.length})` : `Appliquer (${sortedSpaces.length})`}
               </button>
             </div>
           </div>

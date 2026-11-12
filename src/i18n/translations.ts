@@ -9,15 +9,23 @@ export interface Translations {
   searchWhatPlaceholder: string;
   searchWhere: string;
   searchWherePlaceholder: string;
+  allCommunes: string;
   searchWhen: string;
   searchWhenAnytime: string;
   searchGuests: string;
   searchAction: string;
   searchClear: string;
   
+  // Trust Badges
+  trustVerified: string;
+  trustFlexible: string;
+  trustPricing: string;
+  explorePrompt: string;
+
   // Navigation
   navExplore: string;
   navHost: string;
+  navPublishSpace: string;
   navBookings: string;
   navFavorites: string;
   navDashboard: string;
@@ -123,41 +131,103 @@ export interface Translations {
   statusRejectedBooking: string;
   statusCancelledBooking: string;
   statusCompletedBooking: string;
+
+  // Landing Page Sections
+  categoriesSubtitle: string;
+  categoriesTitle: string;
+  spacesCountAlgiers: string;
+
+  featuredSubtitle: string;
+  featuredTitle: string;
+  tabAllPlaces: string;
+  tabRooftops: string;
+  tabStudios: string;
+  tabMeetingRooms: string;
+  viewAllSpacesCount: string;
+
+  howItWorksSubtitle: string;
+  howItWorksTitle: string;
+  howItWorksDesc: string;
+  forRenters: string;
+  forOwners: string;
+  findSpaceNow: string;
+  publishMySpace: string;
+
+  testimonialsSubtitle: string;
+  testimonialsTitle: string;
+  testimonialsDesc: string;
+
+  faqSubtitle: string;
+  faqTitle: string;
+  faqDesc: string;
+
+  ctaSubtitle: string;
+  ctaTitle: string;
+  ctaDesc: string;
+  ctaBrowseBtn: string;
+  ctaPublishBtn: string;
+
+  // Footer
+  footerDesc: string;
+  footerExploreTitle: string;
+  footerHostTitle: string;
+  footerDistrictsTitle: string;
+  footerRights: string;
+  termsBooking: string;
+  termsPrivacy: string;
+
+  // Auth Modal
+  authLoginSubtitle: string;
+  authSignupSubtitle: string;
+  authLoginTab: string;
+  authSignupTab: string;
+  authForgotPass: string;
+  authLoginBtn: string;
+  authSignupBtn: string;
+  authSuccessLogin: string;
+  authSuccessSignup: string;
 }
 
 export const translations: Record<LanguageCode, Translations> = {
   fr: {
     brandName: 'Makanset',
-    tagline: "Nos Espaces, Votre Vision.",
+    tagline: 'Nos Espaces, Votre Vision.',
     slogan: "Trouvez et réservez des lieux uniques à l'heure à Alger",
     heroKicker: 'Événement – Espace extérieur panoramique · HYDRA, ALGER',
     searchWhat: 'Que préparez-vous ?',
     searchWhatPlaceholder: 'Réunion, shooting, conférence...',
     searchWhere: 'Où ?',
     searchWherePlaceholder: "Toutes les communes d'Alger",
+    allCommunes: "Toutes les communes d'Alger",
     searchWhen: 'Quand ?',
     searchWhenAnytime: 'À tout moment',
     searchGuests: 'Personnes',
     searchAction: 'Rechercher',
     searchClear: 'Effacer les filtres',
 
+    trustVerified: 'Lieux vérifiés physiquement à Alger',
+    trustFlexible: "Réservation à l'heure & à la journée",
+    trustPricing: 'Tarifs transparents en Dinars (DA)',
+    explorePrompt: 'Explorer',
+
     navExplore: 'Parcourir les lieux',
     navHost: 'Devenir hôte',
+    navPublishSpace: 'Publier un espace',
     navBookings: 'Mes réservations',
     navFavorites: 'Favoris',
     navDashboard: 'Espace Hôte',
     navAdmin: 'Administration',
-    navLogin: 'Connexion',
+    navLogin: 'Se connecter',
     navSignUp: "S'inscrire",
 
-    actMeeting: 'Réunion',
-    actConference: 'Conférence',
+    actMeeting: 'Réunion & Conseil',
+    actConference: 'Conférence & Séminaire',
     actWorkshop: 'Formation & Atelier',
     actPhoto: 'Shooting photo',
-    actEvent: 'Événement privé',
-    actFilming: 'Tournage',
-    actCoworking: 'Coworking',
-    actPodcast: 'Podcast & Audio',
+    actEvent: 'Événement & Rooftop',
+    actFilming: 'Tournage & Production',
+    actCoworking: 'Coworking & Bureaux',
+    actPodcast: 'Podcast & Studio Son',
     allActivities: 'Toutes les activités',
 
     fromPrice: 'À partir de',
@@ -242,156 +312,98 @@ export const translations: Record<LanguageCode, Translations> = {
     statusRejectedBooking: 'Refusée',
     statusCancelledBooking: 'Annulée',
     statusCompletedBooking: 'Terminée',
-  },
-  ar: {
-    brandName: 'مكانست',
-    tagline: 'مساحتنا، رؤيتكم.',
-    slogan: 'اعثر على مساحات مميزة بالساعة في الجزائر العاصمة واحجزها بسهولة',
-    heroKicker: 'فعاليات – فضاء خارجي بإطلالة بانورامية · حيدرة، الجزائر العاصمة',
-    searchWhat: 'ماذا تنوي تنظيمه؟',
-    searchWhatPlaceholder: 'اجتماع، جلسة تصوير، مؤتمر...',
-    searchWhere: 'أين؟',
-    searchWherePlaceholder: 'كل بلديات الجزائر العاصمة',
-    searchWhen: 'متى؟',
-    searchWhenAnytime: 'في أي وقت',
-    searchGuests: 'الأفراد',
-    searchAction: 'بحث',
-    searchClear: 'إلغاء التصفيات',
 
-    navExplore: 'استكشف الأماكن',
-    navHost: 'كن مضيفاً',
-    navBookings: 'حجوزاتي',
-    navFavorites: 'المفضلة',
-    navDashboard: 'لوحة تحكم المضيف',
-    navAdmin: 'الإدارة',
-    navLogin: 'دخول',
-    navSignUp: 'تسجيل',
+    categoriesSubtitle: 'Des espaces sur mesure',
+    categoriesTitle: 'Louez un lieu unique pour chaque moment',
+    spacesCountAlgiers: 'espaces à Alger',
 
-    actMeeting: 'اجتماع عمل',
-    actConference: 'مؤتمر',
-    actWorkshop: 'ورشة عمل وتدريب',
-    actPhoto: 'جلسة تصوير فوتوغرافي',
-    actEvent: 'مناسبة خاصة',
-    actFilming: 'تصوير فيديو وإنتاج',
-    actCoworking: 'عمل مشترك',
-    actPodcast: 'بودكاست واستوديو صوت',
-    allActivities: 'جميع الأنشطة',
+    featuredSubtitle: "Sélection d'exception",
+    featuredTitle: 'Espaces populaires à Alger',
+    tabAllPlaces: 'Tous les lieux',
+    tabRooftops: 'Rooftops & Patios',
+    tabStudios: 'Studios Photo',
+    tabMeetingRooms: 'Salles de Réunion',
+    viewAllSpacesCount: "Voir tous les {count} espaces d'Alger",
 
-    fromPrice: 'ابتداءً من',
-    perHour: 'دج / ساعة',
-    perDay: 'دج / يوم',
-    capacityMax: 'السعة',
-    surfaceArea: 'المساحة',
-    minHoursNotice: 'أدنى مدة للحجز',
-    amenitiesTitle: 'التجهيزات والخدمات المتوفرة',
-    addonsTitle: 'الخيارات والخدمات الإضافية',
-    addonsSubtitle: 'خصّص تجربتك وفق متطلباتك الدقيقة',
-    rulesTitle: 'القواعد الداخلية للمكان',
-    cancellationTitle: 'شروط الإلغاء',
-    reviewsTitle: 'تقييمات المستأجرين',
-    hostTitle: 'عن المضيف',
-    responseRate: 'نسبة الاستجابة',
-    responseTime: 'متوسط وقت الرد',
-    contactWhatsApp: 'تواصل عبر واتساب',
-    callHost: 'اتصال هاتفي بالمضيف',
-    requestToBook: 'طلب الحجز الآن',
-    verifiedSpace: 'فضاء معتمد من مكانست',
+    howItWorksSubtitle: 'Fonctionnement',
+    howItWorksTitle: 'Comment fonctionne Makanset ?',
+    howItWorksDesc: 'Une plateforme simple, fluide et pensée sur-mesure pour la location d’espaces à Alger.',
+    forRenters: 'Pour les locataires',
+    forOwners: 'Pour les propriétaires',
+    findSpaceNow: 'Trouver un lieu maintenant',
+    publishMySpace: 'Publier mon espace à Alger',
 
-    pricingDetails: 'تفاصيل التسعير',
-    spaceRental: 'إيجار المساحة',
-    addonsTotal: 'الخدمات الإضافية',
-    serviceFee: 'رسوم الخدمة (7%)',
-    totalPrice: 'المجموع الإجمالي',
-    selectTimeSlot: 'اختر الفترة الزمنية',
-    startTime: 'وقت البدء',
-    endTime: 'وقت الانتهاء',
-    dateLabel: 'التاريخ',
-    guestsLabel: 'عدد الحاضرين',
+    testimonialsSubtitle: 'Témoignages',
+    testimonialsTitle: 'Ils réalisent leurs projets sur Makanset',
+    testimonialsDesc: 'Des entreprises, photographes et formateurs nous font confiance à Alger pour leurs événements.',
 
-    checkoutTitle: 'تأكيد وحجز الفضاء',
-    stepDetails: '1. التوقيت والخيارات',
-    stepContact: '2. معلومات الاتصال',
-    stepPayment: '3. طريقة الدفع',
-    stepConfirm: '4. التأكيد النهائي',
-    fullName: 'الاسم الكامل',
-    phoneNumber: 'رقم الهاتف (+213)',
-    emailAddress: 'البريد الإلكتروني',
-    activityDescription: 'اشرح تفاصيل نشاطك',
-    activityPlaceholder: 'مثال: جلسة تصوير منتجات مع 4 أشخاص ومعدات خفيفة...',
-    paymentOnlineTitle: 'الدفع الإلكتروني الآمن (Chargily / الذهبية / CIB)',
-    paymentOnlineDesc: 'قبول فوري ومباشر لبطاقات الذهبية و CIB',
-    paymentOnSiteTitle: 'الدفع في المكان أو عبر بريدي موب / CCP',
-    paymentOnSiteDesc: 'تسديد المبلغ عند الوصول أو إرسال وصل التحويل',
-    paymentBaridiMobDesc: 'تحويل مباشر عبر تطبيق بريدي موب مع تأكيد سريع',
-    cardNumber: 'رقم بطاقة الذهبية أو CIB',
-    cardExpiry: 'تاريخ انتهاء الصلاحية',
-    cardCvv: 'الرمز السري CVV',
-    confirmBookingBtn: 'تأكيد إرسال طلب الحجز',
-    bookingSuccessTitle: 'تم إرسال طلب الحجز بنجاح!',
-    bookingSuccessDesc: 'تم استلام طلبك وسيتم تأكيده في غضون 15 دقيقة تقريباً.',
-    bookingRefLabel: 'رقم مرجع الحجز',
-    viewMyBookings: 'عرض قائمة حجوزاتي',
+    faqSubtitle: 'FAQ',
+    faqTitle: 'Questions fréquentes',
+    faqDesc: 'Tout ce que vous devez savoir pour réserver ou publier un espace sur Makanset.',
 
-    dashboardTitle: 'لوحة تحكم صاحب الفضاء',
-    tabOverview: 'نظرة عامة',
-    tabCalendar: 'التقويم التفاعلي',
-    tabBookings: 'الحجوزات',
-    tabSpaces: 'مساحاتي',
-    tabAddons: 'الخدمات الإضافية',
-    tabEarnings: 'المداخيل',
-    tabProfile: 'الملف الشخصي',
-    pendingRequests: 'طلبات في الانتظار',
-    activeBookings: 'حجوزات مؤكدة',
-    monthlyRevenue: 'مداخيل الشهر',
-    occupancyRate: 'نسبة الإشغال',
-    confirmAction: 'تأكيد الحجز',
-    rejectAction: 'رفض',
-    blockSlotAction: 'حجب الفترة',
-    unblockSlotAction: 'إتاحة الفترة',
-    addNewSpace: 'إضافة إعلان جديد',
-    editPrice: 'تعديل السعر',
-    statusPublished: 'منشور ومتاح',
-    statusPending: 'في انتظار موافقة الإدارة',
-    statusPaused: 'معطل مؤقتاً',
+    ctaSubtitle: 'Prêt à commencer ?',
+    ctaTitle: "Trouvez l'espace idéal ou commencez à rentabiliser votre lieu à Alger",
+    ctaDesc: 'Rejoignez dès aujourd’hui des centaines de professionnels, créateurs et propriétaires qui réinventent la réservation de lieux à l’heure en Algérie.',
+    ctaBrowseBtn: 'Explorer tous les espaces',
+    ctaPublishBtn: 'Publier un espace gratuitement',
 
-    statusPendingBooking: 'في انتظار التأكيد',
-    statusConfirmedBooking: 'مؤكد',
-    statusRejectedBooking: 'مرفوض',
-    statusCancelledBooking: 'ملغي',
-    statusCompletedBooking: 'مكتمل',
+    footerDesc: 'La plateforme algéroise de réservation d’espaces d’exception à l’heure et à la journée. Salles de réunion, studios photo, lofts et villas privées à Alger.',
+    footerExploreTitle: 'Explorer par activité',
+    footerHostTitle: 'Propriétaires & Aide',
+    footerDistrictsTitle: "Communes d'Alger",
+    footerRights: 'Makanset Algérie. Tous droits réservés. Tarifs affichés en Dinars Algériens (DZD).',
+    termsBooking: 'Conditions de réservation',
+    termsPrivacy: 'Confidentialité',
+
+    authLoginSubtitle: 'Accédez à vos réservations et vos échanges à Alger',
+    authSignupSubtitle: 'Rejoignez la communauté Makanset à Alger',
+    authLoginTab: 'Se connecter',
+    authSignupTab: "S'inscrire",
+    authForgotPass: 'Mot de passe oublié ?',
+    authLoginBtn: 'Se connecter',
+    authSignupBtn: 'Créer mon compte',
+    authSuccessLogin: 'Connexion réussie ! Bienvenue sur Makanset.',
+    authSuccessSignup: 'Compte créé avec succès ! Bienvenue sur Makanset.',
   },
   en: {
     brandName: 'Makanset',
     tagline: 'Our Spaces, Your Vision.',
-    slogan: 'Discover and book unique hourly spaces across Algiers',
+    slogan: 'Find and book unique hourly venues across Algiers',
     heroKicker: 'Event – Panoramic Outdoor Terrace · HYDRA, ALGIERS',
     searchWhat: 'What are you planning?',
-    searchWhatPlaceholder: 'Meeting, photoshoot, workshop...',
+    searchWhatPlaceholder: 'Meeting, photo shoot, conference...',
     searchWhere: 'Where?',
     searchWherePlaceholder: 'All Algiers districts',
+    allCommunes: 'All Algiers districts',
     searchWhen: 'When?',
     searchWhenAnytime: 'Anytime',
     searchGuests: 'Guests',
     searchAction: 'Search',
     searchClear: 'Clear filters',
 
+    trustVerified: 'Physically verified spaces in Algiers',
+    trustFlexible: 'Hourly & full-day bookings',
+    trustPricing: 'Transparent pricing in Dinars (DZD)',
+    explorePrompt: 'Explore',
+
     navExplore: 'Browse Spaces',
-    navHost: 'List your space',
+    navHost: 'List a Space',
+    navPublishSpace: 'List a Space',
     navBookings: 'My Bookings',
     navFavorites: 'Favorites',
     navDashboard: 'Host Dashboard',
-    navAdmin: 'Admin',
+    navAdmin: 'Administration',
     navLogin: 'Log in',
     navSignUp: 'Sign up',
 
-    actMeeting: 'Meeting',
-    actConference: 'Conference',
-    actWorkshop: 'Workshop & Class',
+    actMeeting: 'Meeting & Boardroom',
+    actConference: 'Conference & Seminar',
+    actWorkshop: 'Training & Workshop',
     actPhoto: 'Photo Shoot',
-    actEvent: 'Private Event',
-    actFilming: 'Film & Video Shoot',
-    actCoworking: 'Coworking',
-    actPodcast: 'Podcast & Audio',
+    actEvent: 'Event & Rooftop',
+    actFilming: 'Filming & Production',
+    actCoworking: 'Coworking & Desks',
+    actPodcast: 'Podcast & Audio Studio',
     allActivities: 'All Activities',
 
     fromPrice: 'From',
@@ -399,16 +411,16 @@ export const translations: Record<LanguageCode, Translations> = {
     perDay: 'DZD/day',
     capacityMax: 'Capacity',
     surfaceArea: 'Area',
-    minHoursNotice: 'Minimum booking',
+    minHoursNotice: 'Min. booking duration',
     amenitiesTitle: 'Amenities & Inclusions',
     addonsTitle: 'Available Add-ons & Equipment',
-    addonsSubtitle: 'Customize your session to your exact requirements',
-    rulesTitle: 'Space Rules',
+    addonsSubtitle: 'Tailor your session to your exact requirements',
+    rulesTitle: 'House Rules',
     cancellationTitle: 'Cancellation Policy',
     reviewsTitle: 'Guest Reviews',
-    hostTitle: 'Meet the Host',
-    responseRate: 'Response rate',
-    responseTime: 'Response time',
+    hostTitle: 'About the Host',
+    responseRate: 'Response Rate',
+    responseTime: 'Response Time',
     contactWhatsApp: 'Chat on WhatsApp',
     callHost: 'Call Host',
     requestToBook: 'Request to Book',
@@ -417,22 +429,22 @@ export const translations: Record<LanguageCode, Translations> = {
     pricingDetails: 'Price Breakdown',
     spaceRental: 'Space Rental',
     addonsTotal: 'Selected Add-ons',
-    serviceFee: 'Service fee (7%)',
+    serviceFee: 'Service Fee (7%)',
     totalPrice: 'Total Price',
     selectTimeSlot: 'Select Time Slot',
-    startTime: 'Start time',
-    endTime: 'End time',
+    startTime: 'Start Time',
+    endTime: 'End Time',
     dateLabel: 'Date',
-    guestsLabel: 'Number of guests',
+    guestsLabel: 'Number of Guests',
 
     checkoutTitle: 'Complete your booking',
-    stepDetails: '1. Slot & Add-ons',
+    stepDetails: '1. Time Slot & Options',
     stepContact: '2. Contact Information',
     stepPayment: '3. Payment Method',
     stepConfirm: '4. Confirmation',
     fullName: 'Full Name',
-    phoneNumber: 'Phone number (+213)',
-    emailAddress: 'Email address',
+    phoneNumber: 'Phone Number (+213)',
+    emailAddress: 'Email Address',
     activityDescription: 'Describe your activity',
     activityPlaceholder: 'e.g. Commercial video shoot with 6 team members and tripods...',
     paymentOnlineTitle: 'Secure Online Payment (Chargily Pay / SATIM)',
@@ -440,12 +452,12 @@ export const translations: Record<LanguageCode, Translations> = {
     paymentOnSiteTitle: 'Pay on arrival or BaridiMob / CCP transfer',
     paymentOnSiteDesc: 'Pay upon check-in or send your transfer receipt',
     paymentBaridiMobDesc: 'Direct transfer via BaridiMob app with fast confirmation',
-    cardNumber: 'Edahabia / CIB card number',
-    cardExpiry: 'Expiry date (MM/YY)',
-    cardCvv: 'CVV security code',
+    cardNumber: 'Edahabia or CIB Card Number',
+    cardExpiry: 'Expiration Date (MM/YY)',
+    cardCvv: 'CVV Security Code',
     confirmBookingBtn: 'Confirm & Send Request',
-    bookingSuccessTitle: 'Booking Request Sent!',
-    bookingSuccessDesc: 'Your request has been received and will be confirmed within ~15 minutes.',
+    bookingSuccessTitle: 'Booking Request Sent Successfully!',
+    bookingSuccessDesc: 'Your request has been sent and will be confirmed within ~15 minutes.',
     bookingRefLabel: 'Booking Reference',
     viewMyBookings: 'View My Bookings',
 
@@ -476,13 +488,62 @@ export const translations: Record<LanguageCode, Translations> = {
     statusRejectedBooking: 'Declined',
     statusCancelledBooking: 'Cancelled',
     statusCompletedBooking: 'Completed',
+
+    categoriesSubtitle: 'Tailored Spaces',
+    categoriesTitle: 'Rent a unique space for every moment',
+    spacesCountAlgiers: 'spaces in Algiers',
+
+    featuredSubtitle: 'Featured Selection',
+    featuredTitle: 'Popular Spaces in Algiers',
+    tabAllPlaces: 'All Spaces',
+    tabRooftops: 'Rooftops & Patios',
+    tabStudios: 'Photo Studios',
+    tabMeetingRooms: 'Meeting Rooms',
+    viewAllSpacesCount: 'View all {count} spaces in Algiers',
+
+    howItWorksSubtitle: 'How It Works',
+    howItWorksTitle: 'How does Makanset work?',
+    howItWorksDesc: 'A simple, seamless platform custom-designed for space rentals in Algiers.',
+    forRenters: 'For Guests',
+    forOwners: 'For Hosts',
+    findSpaceNow: 'Find a Space Now',
+    publishMySpace: 'List My Space in Algiers',
+
+    testimonialsSubtitle: 'Testimonials',
+    testimonialsTitle: 'Bringing ideas to life on Makanset',
+    testimonialsDesc: 'Companies, creators, and educators across Algiers trust us for their key events.',
+
+    faqSubtitle: 'FAQ',
+    faqTitle: 'Frequently Asked Questions',
+    faqDesc: 'Everything you need to know about booking or listing a space on Makanset.',
+
+    ctaSubtitle: 'Ready to start?',
+    ctaTitle: 'Find the ideal space or start monetizing your venue in Algiers',
+    ctaDesc: 'Join hundreds of professionals, creators, and space owners redefining hourly venue booking across Algeria today.',
+    ctaBrowseBtn: 'Browse all spaces',
+    ctaPublishBtn: 'List a space for free',
+
+    footerDesc: 'The Algiers platform for reserving exceptional spaces by the hour and by the day. Meeting rooms, photo studios, lofts, and private villas across Algiers.',
+    footerExploreTitle: 'Explore by activity',
+    footerHostTitle: 'Hosts & Support',
+    footerDistrictsTitle: 'Algiers Districts',
+    footerRights: 'Makanset Algeria. All rights reserved. Prices shown in Algerian Dinars (DZD).',
+    termsBooking: 'Booking Terms',
+    termsPrivacy: 'Privacy Policy',
+
+    authLoginSubtitle: 'Access your reservations and messages in Algiers',
+    authSignupSubtitle: 'Join the Makanset community in Algiers',
+    authLoginTab: 'Log in',
+    authSignupTab: 'Sign up',
+    authForgotPass: 'Forgot password?',
+    authLoginBtn: 'Log in',
+    authSignupBtn: 'Create Account',
+    authSuccessLogin: 'Login successful! Welcome back to Makanset.',
+    authSuccessSignup: 'Account created successfully! Welcome to Makanset.',
   },
 };
 
 export const formatCurrency = (amount: number, lang: LanguageCode = 'fr'): string => {
-  const formattedNumber = new Intl.NumberFormat('fr-DZ').format(amount);
-  if (lang === 'ar') {
-    return `${formattedNumber} دج`;
-  }
-  return `${formattedNumber} DA`;
+  const formattedNumber = new Intl.NumberFormat(lang === 'en' ? 'en-US' : 'fr-DZ').format(amount);
+  return `${formattedNumber} ${lang === 'en' ? 'DZD' : 'DA'}`;
 };

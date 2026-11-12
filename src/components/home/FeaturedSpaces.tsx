@@ -5,7 +5,7 @@ import { ActivityCategory } from '../../types';
 import { ArrowRight } from 'lucide-react';
 
 export const FeaturedSpaces: React.FC = () => {
-  const { spaces, navigateTo, setFilters } = useApp();
+  const { spaces, navigateTo, setFilters, t } = useApp();
   const [activeTab, setActiveTab] = useState<ActivityCategory | 'all'>('all');
 
   const filtered = activeTab === 'all'
@@ -13,17 +13,17 @@ export const FeaturedSpaces: React.FC = () => {
     : spaces.filter((s) => s.primaryCategory === activeTab || s.allowedActivities.includes(activeTab)).slice(0, 6);
 
   return (
-    <section className="py-20 bg-[#F7F5F2]">
+    <section className="py-20 bg-[#F7F5F2] border-t border-[#E5E2DD]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Title and Segmented Tabs */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
             <div className="text-xs font-bold text-[#D9532B] uppercase tracking-wider mb-2">
-              Sélection d'exception
+              {t.featuredSubtitle}
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111111] tracking-tight font-display">
-              Espaces populaires à Alger
+              {t.featuredTitle}
             </h2>
           </div>
 
@@ -37,7 +37,7 @@ export const FeaturedSpaces: React.FC = () => {
                   : 'bg-white text-[#6B6B6B] hover:text-[#111111] border border-[#E5E2DD]'
               }`}
             >
-              Tous les lieux
+              {t.tabAllPlaces}
             </button>
             <button
               onClick={() => setActiveTab('evenement')}
@@ -47,7 +47,7 @@ export const FeaturedSpaces: React.FC = () => {
                   : 'bg-white text-[#6B6B6B] hover:text-[#111111] border border-[#E5E2DD]'
               }`}
             >
-              Rooftops & Patios
+              {t.tabRooftops}
             </button>
             <button
               onClick={() => setActiveTab('shooting')}
@@ -57,7 +57,7 @@ export const FeaturedSpaces: React.FC = () => {
                   : 'bg-white text-[#6B6B6B] hover:text-[#111111] border border-[#E5E2DD]'
               }`}
             >
-              Studios Photo
+              {t.tabStudios}
             </button>
             <button
               onClick={() => setActiveTab('reunion')}
@@ -67,7 +67,7 @@ export const FeaturedSpaces: React.FC = () => {
                   : 'bg-white text-[#6B6B6B] hover:text-[#111111] border border-[#E5E2DD]'
               }`}
             >
-              Salles de Réunion
+              {t.tabMeetingRooms}
             </button>
           </div>
         </div>
@@ -88,7 +88,7 @@ export const FeaturedSpaces: React.FC = () => {
             }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#111111] hover:bg-[#D9532B] text-white text-sm font-semibold transition-all hover:scale-102 shadow-md"
           >
-            <span>Voir tous les {spaces.length} espaces d'Alger</span>
+            <span>{t.viewAllSpacesCount.replace('{count}', String(spaces.length))}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

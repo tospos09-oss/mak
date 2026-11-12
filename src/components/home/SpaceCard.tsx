@@ -10,7 +10,7 @@ interface SpaceCardProps {
 }
 
 export const SpaceCard: React.FC<SpaceCardProps> = ({ space, className = '' }) => {
-  const { navigateTo, language } = useApp();
+  const { navigateTo, language, t } = useApp();
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
 
   const handleNextPhoto = (e: React.MouseEvent) => {
@@ -43,14 +43,14 @@ export const SpaceCard: React.FC<SpaceCardProps> = ({ space, className = '' }) =
             <button
               onClick={handlePrevPhoto}
               className="absolute left-2.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#111111] shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
-              aria-label="Photo précédente"
+              aria-label={language === 'en' ? 'Previous photo' : 'Photo précédente'}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={handleNextPhoto}
               className="absolute right-2.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/90 hover:bg-white text-[#111111] shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
-              aria-label="Photo suivante"
+              aria-label={language === 'en' ? 'Next photo' : 'Photo suivante'}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -72,7 +72,7 @@ export const SpaceCard: React.FC<SpaceCardProps> = ({ space, className = '' }) =
 
       {/* Space Card Metadata */}
       <div className="flex flex-col gap-1">
-        {/* Row 1: Title */}
+        {/* Row 1: Title (user content preserved) */}
         <h3 className="font-semibold text-[15px] text-[#111111] tracking-tight leading-snug line-clamp-1 group-hover:text-[#D9532B] transition-colors">
           {space.title}
         </h3>
@@ -86,7 +86,7 @@ export const SpaceCard: React.FC<SpaceCardProps> = ({ space, className = '' }) =
           <span aria-hidden="true">·</span>
           <span className="flex items-center gap-1">
             <Users className="w-3 h-3" />
-            {space.capacity} pers max
+            {space.capacity} {language === 'en' ? 'guests max' : 'pers max'}
           </span>
           <span aria-hidden="true">·</span>
           <span>{space.surface} m²</span>
@@ -94,11 +94,11 @@ export const SpaceCard: React.FC<SpaceCardProps> = ({ space, className = '' }) =
 
         {/* Row 3: Price in DZD */}
         <div className="mt-1 flex items-baseline gap-1 text-[#111111]">
-          <span className="text-xs text-[#6B6B6B]">À partir de</span>
+          <span className="text-xs text-[#6B6B6B]">{t.fromPrice}</span>
           <span className="font-bold text-base text-[#111111] tabular-nums">
             {formatCurrency(space.pricing.pricePerHour, language)}
           </span>
-          <span className="text-xs text-[#6B6B6B]">/heure</span>
+          <span className="text-xs text-[#6B6B6B]">{language === 'en' ? '/hr' : '/heure'}</span>
         </div>
       </div>
     </div>

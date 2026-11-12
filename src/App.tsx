@@ -5,11 +5,16 @@ import { Footer } from './components/common/Footer';
 import { HeroSection } from './components/home/HeroSection';
 import { CategoryGrid } from './components/home/CategoryGrid';
 import { FeaturedSpaces } from './components/home/FeaturedSpaces';
-import { WhyMakanset } from './components/home/WhyMakanset';
-import { CommunesSection } from './components/home/CommunesSection';
+import { HowItWorksSection } from './components/home/HowItWorksSection';
+import { TestimonialsSection } from './components/home/TestimonialsSection';
+import { FaqSection } from './components/home/FaqSection';
+import { LandingCtaBanner } from './components/home/LandingCtaBanner';
 import { SearchResults } from './components/search/SearchResults';
 import { SpaceDetail } from './components/space/SpaceDetail';
 import { ClientBookingsView } from './components/booking/ClientBookingsView';
+import { AuthModal } from './components/auth/AuthModal';
+import { PublishSpaceModal } from './components/host/PublishSpaceModal';
+import { HostLandingPage } from './components/host/HostLandingPage';
 
 const AppContent: React.FC = () => {
   const { activePage, selectedSpaceId } = useApp();
@@ -24,10 +29,14 @@ const AppContent: React.FC = () => {
             <HeroSection />
             <CategoryGrid />
             <FeaturedSpaces />
-            <WhyMakanset />
-            <CommunesSection />
+            <HowItWorksSection />
+            <TestimonialsSection />
+            <FaqSection />
+            <LandingCtaBanner />
           </>
         )}
+
+        {activePage === 'host' && <HostLandingPage />}
 
         {activePage === 'browse' && <SearchResults />}
 
@@ -39,6 +48,8 @@ const AppContent: React.FC = () => {
       </main>
 
       <Footer />
+      <AuthModal />
+      <PublishSpaceModal />
     </div>
   );
 };

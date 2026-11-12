@@ -136,10 +136,10 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
           <div>
             <div className="mb-6">
               <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                Étape 1 sur 3
+                {language === 'en' ? 'Step 1 of 3' : 'Étape 1 sur 3'}
               </span>
               <h3 className="text-2xl font-bold text-[#111111] tracking-tight font-display">
-                Récapitulatif de votre réservation
+                {language === 'en' ? 'Booking Summary' : 'Récapitulatif de votre réservation'}
               </h3>
             </div>
 
@@ -153,7 +153,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
               />
               <div className="flex-1 min-w-0">
                 <div className="text-[11px] font-semibold text-[#6B6B6B] uppercase tracking-wider">
-                  {space.commune} · Alger
+                  {space.commune} · {language === 'en' ? 'Algiers' : 'Alger'}
                 </div>
                 <h4 className="font-bold text-sm text-[#111111] truncate">{space.title}</h4>
                 <div className="mt-2 flex items-center gap-3 text-xs text-[#6B6B6B]">
@@ -167,7 +167,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   </span>
                   <span className="flex items-center gap-1">
                     <Users className="w-3.5 h-3.5" />
-                    {guestCount} pers.
+                    {guestCount} {language === 'en' ? 'guests' : 'pers.'}
                   </span>
                 </div>
               </div>
@@ -177,7 +177,9 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             {selectedAddOns.length > 0 && (
               <div className="mb-6">
                 <h5 className="text-xs font-bold text-[#111111] uppercase tracking-wider mb-2">
-                  Options & Add-ons sélectionnés ({selectedAddOns.length})
+                  {language === 'en'
+                    ? `Selected Add-ons (${selectedAddOns.length})`
+                    : `Options & Add-ons sélectionnés (${selectedAddOns.length})`}
                 </h5>
                 <div className="space-y-2">
                   {selectedAddOns.map((addon) => (
@@ -200,27 +202,31 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             {/* Price Breakdown */}
             <div className="space-y-2 py-4 border-t border-b border-[#E5E2DD] text-xs text-[#6B6B6B] mb-6">
               <div className="flex justify-between">
-                <span>Location espace ({hoursCount}h × {formatCurrency(space.pricing.pricePerHour, language)})</span>
+                <span>
+                  {language === 'en'
+                    ? `Space Rental (${hoursCount}h × ${formatCurrency(space.pricing.pricePerHour, language)})`
+                    : `Location espace (${hoursCount}h × ${formatCurrency(space.pricing.pricePerHour, language)})`}
+                </span>
                 <span className="font-semibold text-[#111111] tabular-nums">
                   {formatCurrency(spacePriceTotal, language)}
                 </span>
               </div>
               {addonsPriceTotal > 0 && (
                 <div className="flex justify-between">
-                  <span>Total des add-ons</span>
+                  <span>{language === 'en' ? 'Add-ons total' : 'Total des add-ons'}</span>
                   <span className="font-semibold text-[#111111] tabular-nums">
                     {formatCurrency(addonsPriceTotal, language)}
                   </span>
                 </div>
               )}
               <div className="flex justify-between">
-                <span>Frais de service plateforme (7%)</span>
+                <span>{language === 'en' ? 'Platform Service Fee (7%)' : 'Frais de service plateforme (7%)'}</span>
                 <span className="font-semibold text-[#111111] tabular-nums">
                   {formatCurrency(serviceFee, language)}
                 </span>
               </div>
               <div className="flex justify-between text-sm font-bold text-[#111111] pt-2 border-t border-[#E5E2DD]">
-                <span>Total à régler</span>
+                <span>{language === 'en' ? 'Total amount' : 'Total à régler'}</span>
                 <span className="text-[#D9532B] text-base tabular-nums">
                   {formatCurrency(totalAmount, language)}
                 </span>
@@ -229,9 +235,9 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
             <button
               onClick={() => setStep(2)}
-              className="w-full h-12 bg-[#D9532B] hover:bg-[#C24520] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg"
+              className="w-full h-12 bg-[#D9532B] hover:bg-[#C24520] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer"
             >
-              <span>Continuer vers vos coordonnées</span>
+              <span>{language === 'en' ? 'Continue to contact info' : 'Continuer vers vos coordonnées'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -242,10 +248,10 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
           <div>
             <div className="mb-6">
               <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                Étape 2 sur 3
+                {language === 'en' ? 'Step 2 of 3' : 'Étape 2 sur 3'}
               </span>
               <h3 className="text-2xl font-bold text-[#111111] tracking-tight font-display">
-                Coordonnées & Projet
+                {language === 'en' ? 'Contact & Details' : 'Coordonnées & Projet'}
               </h3>
             </div>
 
@@ -258,7 +264,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             >
               <div>
                 <label className="block text-xs font-bold text-[#111111] mb-1 uppercase tracking-wider">
-                  Nom et Prénom
+                  {t.fullName}
                 </label>
                 <input
                   type="text"
@@ -272,7 +278,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-[#111111] mb-1 uppercase tracking-wider">
-                  Numéro de téléphone (+213)
+                  {t.phoneNumber}
                 </label>
                 <input
                   type="tel"
@@ -286,7 +292,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-[#111111] mb-1 uppercase tracking-wider">
-                  Adresse email de confirmation
+                  {language === 'en' ? 'Confirmation email address' : 'Adresse email de confirmation'}
                 </label>
                 <input
                   type="email"
@@ -300,14 +306,18 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
 
               <div>
                 <label className="block text-xs font-bold text-[#111111] mb-1 uppercase tracking-wider">
-                  Précisez votre activité ou événement
+                  {t.activityDescription}
                 </label>
                 <textarea
                   rows={3}
                   value={activityDesc}
                   onChange={(e) => setActivityDesc(e.target.value)}
                   className="w-full p-3 rounded-xl border border-[#E5E2DD] focus:border-[#111111] text-sm font-medium focus:outline-none"
-                  placeholder="Ex: Tournage vidéo publicitaire avec 6 personnes et matériel d'éclairage..."
+                  placeholder={
+                    language === 'en'
+                      ? 'e.g. Commercial video shoot with 6 people and camera equipment...'
+                      : "Ex: Tournage vidéo publicitaire avec 6 personnes et matériel d'éclairage..."
+                  }
                 />
               </div>
 
@@ -315,15 +325,15 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="h-12 px-6 rounded-full border border-[#E5E2DD] text-xs font-semibold text-[#6B6B6B] hover:text-[#111111]"
+                  className="h-12 px-6 rounded-full border border-[#E5E2DD] text-xs font-semibold text-[#6B6B6B] hover:text-[#111111] cursor-pointer"
                 >
-                  Retour
+                  {language === 'en' ? 'Back' : 'Retour'}
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 h-12 bg-[#D9532B] hover:bg-[#C24520] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md"
+                  className="flex-1 h-12 bg-[#D9532B] hover:bg-[#C24520] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                 >
-                  <span>Passer au mode de paiement</span>
+                  <span>{language === 'en' ? 'Proceed to payment' : 'Passer au mode de paiement'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -336,10 +346,10 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
           <div>
             <div className="mb-6">
               <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                Étape 3 sur 3
+                {language === 'en' ? 'Step 3 of 3' : 'Étape 3 sur 3'}
               </span>
               <h3 className="text-2xl font-bold text-[#111111] tracking-tight font-display">
-                Mode de règlement
+                {language === 'en' ? 'Payment Method' : 'Mode de règlement'}
               </h3>
             </div>
 
@@ -363,10 +373,10 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     />
                     <div>
                       <div className="text-sm font-bold text-[#111111] flex items-center gap-2">
-                        <span>Paiement en ligne sécurisé (Chargily Pay / SATIM)</span>
+                        <span>{t.paymentOnlineTitle}</span>
                       </div>
                       <div className="text-xs text-[#6B6B6B] mt-0.5">
-                        Cartes Edahabia & CIB acceptées instantanément
+                        {t.paymentOnlineDesc}
                       </div>
                     </div>
                   </div>
@@ -385,7 +395,9 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   <div className="mt-4 pt-4 border-t border-[#D9532B]/20 space-y-3 animate-in fade-in">
                     <div>
                       <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase mb-1">
-                        Numéro de carte Edahabia / CIB (Simulation)
+                        {language === 'en'
+                          ? 'Edahabia / CIB Card Number (Simulation)'
+                          : 'Numéro de carte Edahabia / CIB (Simulation)'}
                       </label>
                       <div className="relative">
                         <CreditCard className="w-4 h-4 text-[#6B6B6B] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -400,7 +412,7 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                     <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase mb-1">
-                          Expiration (MM/AA)
+                          {language === 'en' ? 'Expiration (MM/YY)' : 'Expiration (MM/AA)'}
                         </label>
                         <input
                           type="text"
@@ -443,10 +455,12 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   />
                   <div>
                     <div className="text-sm font-bold text-[#111111]">
-                      Paiement sur place ou virement BaridiMob / CCP
+                      {t.paymentOnSiteTitle}
                     </div>
                     <div className="text-xs text-[#6B6B6B] mt-0.5">
-                      Confirmation manuelle de la réservation par l’hôte à réception du versement ou sur place
+                      {language === 'en'
+                        ? 'Manual confirmation by host upon receipt of transfer or on arrival'
+                        : 'Confirmation manuelle de la réservation par l’hôte à réception du versement ou sur place'}
                     </div>
                   </div>
                 </div>
@@ -456,7 +470,9 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
               <div className="flex items-center gap-2 p-3 rounded-xl bg-emerald-50 text-emerald-800 text-xs border border-emerald-100">
                 <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-600" />
                 <span>
-                  Transactions protégées par protocole SSL et blocage temporaire du créneau garanti pendant 24h.
+                  {language === 'en'
+                    ? 'SSL encrypted transaction & guaranteed 24h slot hold.'
+                    : 'Transactions protégées par protocole SSL et blocage temporaire du créneau garanti pendant 24h.'}
                 </span>
               </div>
 
@@ -465,19 +481,21 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="h-12 px-6 rounded-full border border-[#E5E2DD] text-xs font-semibold text-[#6B6B6B] hover:text-[#111111]"
+                  className="h-12 px-6 rounded-full border border-[#E5E2DD] text-xs font-semibold text-[#6B6B6B] hover:text-[#111111] cursor-pointer"
                 >
-                  Retour
+                  {language === 'en' ? 'Back' : 'Retour'}
                 </button>
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="flex-1 h-12 bg-[#D9532B] hover:bg-[#C24520] disabled:bg-[#CCCCCC] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md"
+                  className="flex-1 h-12 bg-[#D9532B] hover:bg-[#C24520] disabled:bg-[#CCCCCC] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                 >
                   {isProcessing ? (
-                    <span>Traitement sécurisé en cours...</span>
+                    <span>{language === 'en' ? 'Processing booking...' : 'Traitement sécurisé en cours...'}</span>
                   ) : (
-                    <span>Confirmer la réservation ({formatCurrency(totalAmount, language)})</span>
+                    <span>
+                      {language === 'en' ? 'Confirm Booking' : 'Confirmer la réservation'} ({formatCurrency(totalAmount, language)})
+                    </span>
                   )}
                 </button>
               </div>
@@ -493,34 +511,36 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
             </div>
 
             <h3 className="text-2xl font-extrabold text-[#111111] mb-2 font-display">
-              Demande envoyée avec succès !
+              {t.bookingSuccessTitle}
             </h3>
 
             <p className="text-xs text-[#6B6B6B] max-w-md mx-auto mb-6">
-              Votre demande de réservation a été enregistrée avec succès. Un SMS et un email de confirmation vous ont été expédiés.
+              {language === 'en'
+                ? 'Your booking request has been registered successfully. A confirmation message and summary have been sent.'
+                : 'Votre demande de réservation a été enregistrée avec succès. Un SMS et un email de confirmation vous ont été expédiés.'}
             </p>
 
             {/* Reference Ticket Card */}
             <div className="p-4 rounded-2xl bg-[#F7F5F2] border border-[#E5E2DD] text-left mb-6 max-w-sm mx-auto space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-[#6B6B6B]">Référence réservation</span>
+                <span className="text-[#6B6B6B]">{t.bookingRefLabel}</span>
                 <span className="font-mono font-bold text-[#D9532B]">{confirmedBookingRef}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6B6B]">Espace</span>
+                <span className="text-[#6B6B6B]">{language === 'en' ? 'Space' : 'Espace'}</span>
                 <span className="font-semibold text-[#111111] truncate max-w-[180px]">{space.title}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6B6B]">Date & Horaires</span>
+                <span className="text-[#6B6B6B]">{language === 'en' ? 'Date & Hours' : 'Date & Horaires'}</span>
                 <span className="font-semibold text-[#111111]">{date} · {startHour}h-{endHour}h</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6B6B]">Montant total</span>
+                <span className="text-[#6B6B6B]">{t.totalPrice}</span>
                 <span className="font-bold text-[#111111] tabular-nums">{formatCurrency(totalAmount, language)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#6B6B6B]">Statut</span>
-                <span className="font-semibold text-amber-600">En attente de confirmation</span>
+                <span className="text-[#6B6B6B]">{language === 'en' ? 'Status' : 'Statut'}</span>
+                <span className="font-semibold text-amber-600">{t.statusPendingBooking}</span>
               </div>
             </div>
 
@@ -530,9 +550,9 @@ export const BookingCheckoutModal: React.FC<BookingCheckoutModalProps> = ({
                   onClose();
                   navigateTo('bookings');
                 }}
-                className="w-full h-12 bg-[#111111] hover:bg-[#D9532B] text-white font-bold rounded-full text-xs transition-colors"
+                className="w-full h-12 bg-[#111111] hover:bg-[#D9532B] text-white font-bold rounded-full text-xs transition-colors cursor-pointer"
               >
-                Voir mes réservations
+                {t.viewMyBookings}
               </button>
             </div>
           </div>

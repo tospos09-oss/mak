@@ -27,7 +27,7 @@ interface SpaceDetailProps {
 }
 
 export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
-  const { getSpaceById, bookings, navigateTo, language } = useApp();
+  const { getSpaceById, bookings, navigateTo, language, t } = useApp();
   const space = getSpaceById(spaceId);
 
   // Gallery modal state
@@ -54,12 +54,12 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
   if (!space) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <h2 className="text-xl font-bold mb-4">Espace introuvable</h2>
+        <h2 className="text-xl font-bold mb-4">{language === 'en' ? 'Space not found' : 'Espace introuvable'}</h2>
         <button
           onClick={() => navigateTo('browse')}
           className="px-6 py-2 bg-[#111111] text-white rounded-full text-sm font-semibold"
         >
-          Retour aux espaces
+          {language === 'en' ? 'Back to spaces' : 'Retour aux espaces'}
         </button>
       </div>
     );
@@ -152,7 +152,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
           className="inline-flex items-center gap-2 text-xs font-semibold text-[#6B6B6B] hover:text-[#111111] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Retour aux résultats</span>
+          <span>{language === 'en' ? 'Back to results' : 'Retour aux résultats'}</span>
         </button>
 
         <div className="flex items-center gap-3">
@@ -161,7 +161,11 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#E5E2DD] text-xs font-semibold text-[#111111] hover:bg-[#F7F5F2] transition-colors cursor-pointer"
           >
             <Share2 className="w-3.5 h-3.5" />
-            <span>{shareCopied ? 'Lien copié !' : 'Partager'}</span>
+            <span>
+              {shareCopied
+                ? (language === 'en' ? 'Link copied!' : 'Lien copié !')
+                : (language === 'en' ? 'Share' : 'Partager')}
+            </span>
           </button>
         </div>
       </div>
@@ -173,11 +177,11 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
           <div className="flex items-center gap-2 text-xs font-semibold text-[#6B6B6B] uppercase tracking-wider mb-2">
             <span>{space.commune}</span>
             <span aria-hidden="true">·</span>
-            <span>Alger, Algérie</span>
+            <span>{language === 'en' ? 'Algiers, Algeria' : 'Alger, Algérie'}</span>
             <span aria-hidden="true">·</span>
             <span className="text-[#D9532B] flex items-center gap-1 font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Espace vérifié Makanset
+              {t.verifiedSpace}
             </span>
           </div>
 
@@ -231,10 +235,14 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
           {/* "Afficher toutes les photos" Button */}
           <button
             onClick={() => openGalleryAt(0)}
-            className="absolute bottom-4 right-4 px-4 py-2 bg-white/95 hover:bg-white text-[#111111] text-xs font-bold rounded-full shadow-lg backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105"
+            className="absolute bottom-4 right-4 px-4 py-2 bg-white/95 hover:bg-white text-[#111111] text-xs font-bold rounded-full shadow-lg backdrop-blur-md flex items-center gap-2 transition-all hover:scale-105 cursor-pointer"
           >
             <Maximize2 className="w-3.5 h-3.5" />
-            <span>Afficher les {space.photos.length} photos</span>
+            <span>
+              {language === 'en'
+                ? `Show all ${space.photos.length} photos`
+                : `Afficher les ${space.photos.length} photos`}
+            </span>
           </button>
         </div>
 
@@ -248,15 +256,15 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             <div className="grid grid-cols-3 gap-4 p-5 rounded-2xl bg-[#F7F5F2] border border-[#E5E2DD] text-center">
               <div>
                 <span className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider block mb-1">
-                  Capacité
+                  {t.capacityMax}
                 </span>
                 <span className="text-base font-bold text-[#111111] font-display">
-                  {space.capacity} personnes
+                  {space.capacity} {language === 'en' ? 'guests' : 'personnes'}
                 </span>
               </div>
               <div className="border-x border-[#E5E2DD]">
                 <span className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider block mb-1">
-                  Surface
+                  {t.surfaceArea}
                 </span>
                 <span className="text-base font-bold text-[#111111] font-display">
                   {space.surface} m²
@@ -264,10 +272,10 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
               </div>
               <div>
                 <span className="text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider block mb-1">
-                  Min. réservation
+                  {t.minHoursNotice}
                 </span>
                 <span className="text-base font-bold text-[#111111] font-display">
-                  {space.pricing.minHours} heures
+                  {space.pricing.minHours} {language === 'en' ? 'hours' : 'heures'}
                 </span>
               </div>
             </div>
@@ -275,7 +283,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             {/* Description */}
             <div>
               <h2 className="text-xl font-bold text-[#111111] tracking-tight font-display mb-4">
-                À propos de ce lieu
+                {language === 'en' ? 'About this space' : 'À propos de ce lieu'}
               </h2>
               <p className="text-sm sm:text-base text-[#333333] leading-relaxed whitespace-pre-line font-normal">
                 {space.description}
@@ -285,7 +293,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             {/* Amenities & Equipments */}
             <div>
               <h2 className="text-xl font-bold text-[#111111] tracking-tight font-display mb-4">
-                Équipements & services inclus
+                {t.amenitiesTitle}
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {space.amenities.map((item, i) => (
@@ -306,13 +314,15 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             <div>
               <div className="mb-4">
                 <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                  Personnalisation
+                  {language === 'en' ? 'Customization' : 'Personnalisation'}
                 </span>
                 <h2 className="text-xl font-bold text-[#111111] tracking-tight font-display">
-                  Options & Add-ons disponibles
+                  {t.addonsTitle}
                 </h2>
                 <p className="text-xs text-[#6B6B6B] mt-1">
-                  Sélectionnez les services et équipements complémentaires souhaités pour votre événement.
+                  {language === 'en'
+                    ? 'Select optional services and equipment to customize your event.'
+                    : 'Sélectionnez les services et équipements complémentaires souhaités pour votre événement.'}
                 </p>
               </div>
 
@@ -346,9 +356,9 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                             <div className="mt-2 text-xs font-bold text-[#111111] tabular-nums">
                               {formatCurrency(addon.price, language)}{' '}
                               <span className="font-normal text-[#6B6B6B]">
-                                {addon.pricingType === 'person' && 'par personne'}
-                                {addon.pricingType === 'unit' && 'par unité / heure'}
-                                {addon.pricingType === 'flat' && 'forfait'}
+                                {addon.pricingType === 'person' && (language === 'en' ? 'per person' : 'par personne')}
+                                {addon.pricingType === 'unit' && (language === 'en' ? 'per unit / hour' : 'par unité / heure')}
+                                {addon.pricingType === 'flat' && (language === 'en' ? 'flat fee' : 'forfait')}
                               </span>
                             </div>
                           </div>
@@ -360,7 +370,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                             <button
                               onClick={() => handleUpdateAddonQty(addon.id, -1, addon.maxQuantity)}
                               className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-slate-100 text-[#111111]"
-                              aria-label="Diminuer"
+                              aria-label={language === 'en' ? 'Decrease' : 'Diminuer'}
                             >
                               <Minus className="w-3 h-3" />
                             </button>
@@ -368,7 +378,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                             <button
                               onClick={() => handleUpdateAddonQty(addon.id, 1, addon.maxQuantity)}
                               className="w-6 h-6 rounded-full flex items-center justify-center hover:bg-slate-100 text-[#111111]"
-                              aria-label="Augmenter"
+                              aria-label={language === 'en' ? 'Increase' : 'Augmenter'}
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -385,10 +395,10 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             <div>
               <div className="mb-4">
                 <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                  Disponibilités
+                  {language === 'en' ? 'Availability' : 'Disponibilités'}
                 </span>
                 <h2 className="text-xl font-bold text-[#111111] tracking-tight font-display">
-                  Calendrier des créneaux
+                  {language === 'en' ? 'Slot Calendar' : 'Calendrier des créneaux'}
                 </h2>
               </div>
               <AvailabilityCalendarReadOnly
@@ -403,10 +413,10 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             <div>
               <div className="mb-4">
                 <span className="text-xs font-bold text-[#D9532B] uppercase tracking-wider">
-                  Emplacement & Quartier
+                  {language === 'en' ? 'Location & District' : 'Emplacement & Quartier'}
                 </span>
                 <h2 className="text-xl font-bold text-[#111111] tracking-tight font-display">
-                  Localisation à {space.commune}
+                  {language === 'en' ? `Location in ${space.commune}` : `Localisation à ${space.commune}`}
                 </h2>
                 <div className="flex items-center gap-1.5 text-xs text-[#6B6B6B] mt-1">
                   <MapPin className="w-3.5 h-3.5 text-[#D9532B]" />
@@ -417,8 +427,12 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 <LeafletMap spaces={[space]} selectedSpaceId={space.id} zoom={15} />
               </div>
               <div className="mt-3 flex items-center justify-between text-xs text-[#6B6B6B]">
-                <span>Quartier : <strong>{space.commune}</strong>, Alger</span>
-                <span className="text-[11px] text-[#888888]">Coordonnées GPS précises vérifiées</span>
+                <span>
+                  {language === 'en' ? 'District: ' : 'Quartier : '}<strong>{space.commune}</strong>, {language === 'en' ? 'Algiers' : 'Alger'}
+                </span>
+                <span className="text-[11px] text-[#888888]">
+                  {language === 'en' ? 'Accurate verified GPS location' : 'Coordonnées GPS précises vérifiées'}
+                </span>
               </div>
             </div>
 
@@ -426,7 +440,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-[#E5E2DD]">
               <div>
                 <h3 className="text-base font-bold text-[#111111] mb-3 font-display">
-                  Règlement intérieur
+                  {t.rulesTitle}
                 </h3>
                 <ul className="space-y-2 text-xs text-[#6B6B6B]">
                   {space.rules.map((rule, idx) => (
@@ -440,19 +454,27 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
 
               <div>
                 <h3 className="text-base font-bold text-[#111111] mb-3 font-display">
-                  Politique d’annulation
+                  {t.cancellationTitle}
                 </h3>
                 <p className="text-xs text-[#6B6B6B] leading-relaxed">
                   {space.cancellationPolicy === 'flexible' &&
-                    'Annulation flexible : Remboursement intégral jusqu’à 24 heures avant le début de votre créneau horaire.'}
+                    (language === 'en'
+                      ? 'Flexible cancellation: Full refund up to 24 hours prior to booking start time.'
+                      : 'Annulation flexible : Remboursement intégral jusqu’à 24 heures avant le début de votre créneau horaire.')}
                   {space.cancellationPolicy === 'moderate' &&
-                    'Annulation modérée : Remboursement intégral jusqu’à 48 heures avant l’événement, 50% au-delà.'}
+                    (language === 'en'
+                      ? 'Moderate cancellation: Full refund up to 48 hours before the event, 50% thereafter.'
+                      : 'Annulation modérée : Remboursement intégral jusqu’à 48 heures avant l’événement, 50% au-delà.')}
                   {space.cancellationPolicy === 'strict' &&
-                    'Annulation stricte : Remboursement de 50% jusqu’à 7 jours avant l’événement.'}
+                    (language === 'en'
+                      ? 'Strict cancellation: 50% refund up to 7 days before event.'
+                      : 'Annulation stricte : Remboursement de 50% jusqu’à 7 jours avant l’événement.')}
                 </p>
                 {space.pricing.securityDeposit && (
                   <div className="mt-3 text-xs text-[#111111] font-semibold">
-                    Caution requise : {formatCurrency(space.pricing.securityDeposit, language)} (restituée après état des lieux).
+                    {language === 'en'
+                      ? `Security deposit required: ${formatCurrency(space.pricing.securityDeposit, language)} (refunded after inspection).`
+                      : `Caution requise : ${formatCurrency(space.pricing.securityDeposit, language)} (restituée après état des lieux).`}
                   </div>
                 )}
               </div>
@@ -469,10 +491,14 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                   <span className="text-2xl font-extrabold text-[#111111] font-display tabular-nums">
                     {formatCurrency(hourlyRate, language)}
                   </span>
-                  <span className="text-xs text-[#6B6B6B] font-medium ml-1">/ heure</span>
+                  <span className="text-xs text-[#6B6B6B] font-medium ml-1">
+                    {language === 'en' ? '/ hour' : '/ heure'}
+                  </span>
                 </div>
                 <div className="text-xs text-[#6B6B6B]">
-                  Min. {space.pricing.minHours} heures
+                  {language === 'en'
+                    ? `Min. ${space.pricing.minHours} hours`
+                    : `Min. ${space.pricing.minHours} heures`}
                 </div>
               </div>
 
@@ -482,7 +508,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 {/* Date Input */}
                 <div>
                   <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-1">
-                    Date de réservation
+                    {t.dateLabel}
                   </label>
                   <div className="relative">
                     <input
@@ -499,7 +525,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-1">
-                      Heure de début
+                      {t.startTime}
                     </label>
                     <select
                       value={startHour}
@@ -523,7 +549,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
 
                   <div>
                     <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-1">
-                      Heure de fin
+                      {t.endTime}
                     </label>
                     <select
                       value={endHour}
@@ -546,11 +572,11 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 {/* Number of guests */}
                 <div>
                   <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-1">
-                    Nombre d'invités / participants
+                    {t.guestsLabel}
                   </label>
                   <div className="flex items-center justify-between h-11 px-3.5 rounded-xl border border-[#E5E2DD] bg-[#F7F5F2]">
                     <span className="text-xs font-semibold text-[#111111]">
-                      {guestsCount} personnes
+                      {guestsCount} {language === 'en' ? 'guests' : 'personnes'}
                     </span>
                     <div className="flex items-center gap-1.5">
                       <button
@@ -576,7 +602,9 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
               <div className="space-y-2.5 py-4 border-t border-b border-[#E5E2DD] text-xs text-[#6B6B6B] mb-6">
                 <div className="flex justify-between">
                   <span>
-                    Location ({hoursCount}h × {formatCurrency(hourlyRate, language)})
+                    {language === 'en'
+                      ? `Space Rental (${hoursCount}h × ${formatCurrency(hourlyRate, language)})`
+                      : `Location (${hoursCount}h × ${formatCurrency(hourlyRate, language)})`}
                   </span>
                   <span className="font-semibold text-[#111111] tabular-nums">
                     {formatCurrency(spacePriceTotal, language)}
@@ -585,7 +613,11 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
 
                 {addonsPriceTotal > 0 && (
                   <div className="flex justify-between">
-                    <span>Options & Add-ons ({computedAddonsList.length})</span>
+                    <span>
+                      {language === 'en'
+                        ? `Add-ons (${computedAddonsList.length})`
+                        : `Options & Add-ons (${computedAddonsList.length})`}
+                    </span>
                     <span className="font-semibold text-[#111111] tabular-nums">
                       {formatCurrency(addonsPriceTotal, language)}
                     </span>
@@ -593,14 +625,16 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 )}
 
                 <div className="flex justify-between">
-                  <span>Frais de service Makanset (7%)</span>
+                  <span>
+                    {language === 'en' ? 'Makanset Service Fee (7%)' : 'Frais de service Makanset (7%)'}
+                  </span>
                   <span className="font-semibold text-[#111111] tabular-nums">
                     {formatCurrency(serviceFee, language)}
                   </span>
                 </div>
 
                 <div className="flex justify-between text-sm font-bold text-[#111111] pt-3 border-t border-[#E5E2DD]">
-                  <span>Total estimé</span>
+                  <span>{language === 'en' ? 'Estimated Total' : 'Total estimé'}</span>
                   <span className="text-lg text-[#D9532B] tabular-nums">
                     {formatCurrency(totalAmount, language)}
                   </span>
@@ -612,11 +646,13 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
                 onClick={() => setCheckoutModalOpen(true)}
                 className="w-full h-12 bg-[#D9532B] hover:bg-[#C24520] text-white font-bold rounded-full text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-102 active:scale-98"
               >
-                <span>Demander à réserver</span>
+                <span>{t.requestToBook}</span>
               </button>
 
               <p className="text-[11px] text-[#888888] text-center mt-3">
-                Aucun débit immédiat avant confirmation de votre demande.
+                {language === 'en'
+                  ? 'You will not be charged until the host confirms your request.'
+                  : 'Aucun débit immédiat avant confirmation de votre demande.'}
               </p>
             </div>
           </div>
@@ -626,7 +662,9 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
       {/* Sticky Bottom Buy Bar on Mobile (< 15% viewport height cap) */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#E5E2DD] px-4 py-3 flex items-center justify-between shadow-2xl">
         <div>
-          <div className="text-xs text-[#6B6B6B]">Total pour {hoursCount}h</div>
+          <div className="text-xs text-[#6B6B6B]">
+            {language === 'en' ? `Total for ${hoursCount}h` : `Total pour ${hoursCount}h`}
+          </div>
           <div className="text-base font-extrabold text-[#D9532B] tabular-nums font-display">
             {formatCurrency(totalAmount, language)}
           </div>
@@ -636,7 +674,7 @@ export const SpaceDetail: React.FC<SpaceDetailProps> = ({ spaceId }) => {
           onClick={() => setCheckoutModalOpen(true)}
           className="h-11 px-6 bg-[#D9532B] text-white font-bold rounded-full text-xs shadow-md active:scale-95"
         >
-          Réserver
+          {language === 'en' ? 'Book now' : 'Réserver'}
         </button>
       </div>
 

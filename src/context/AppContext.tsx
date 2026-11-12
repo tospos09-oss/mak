@@ -33,19 +33,33 @@ interface SearchFilters {
 
 interface AppContextType {
   // Navigation & Page State
-  activePage: 'home' | 'browse' | 'space-detail' | 'bookings';
+  activePage: 'home' | 'browse' | 'space-detail' | 'bookings' | 'host';
   selectedSpaceId: string | null;
-  navigateTo: (page: 'home' | 'browse' | 'space-detail' | 'bookings', spaceId?: string) => void;
+  navigateTo: (page: 'home' | 'browse' | 'space-detail' | 'bookings' | 'host', spaceId?: string) => void;
 
   // Language & i18n
   language: LanguageCode;
   setLanguage: (lang: LanguageCode) => void;
   t: Translations;
 
-  // User & Roles
+  // User & Roles & Modals
   currentUser: UserProfile;
+  isLoggedIn: boolean;
+  login: (userData: { name: string; email: string; phone?: string }) => void;
+  logout: () => void;
   activeRole: 'client' | 'host' | 'admin';
   switchRole: (role: 'client' | 'host' | 'admin') => void;
+
+  // Interactive Modals
+  isAuthModalOpen: boolean;
+  authModalMode: 'login' | 'signup';
+  openAuthModal: (mode?: 'login' | 'signup') => void;
+  closeAuthModal: () => void;
+  setAuthModalMode: (mode: 'login' | 'signup') => void;
+
+  isPublishModalOpen: boolean;
+  openPublishModal: () => void;
+  closePublishModal: () => void;
 
   // Search & Filters
   filters: SearchFilters;
@@ -113,7 +127,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Page Navigation
-  const [activePage, setActivePage] = useState<'home' | 'browse' | 'space-detail' | 'bookings'>('home');
+  const [activePage, setActivePage] = useState<'home' | 'browse' | 'space-detail' | 'bookings' | 'host'>('home');
   const [selectedSpaceId, setSelectedSpaceId] = useState<string | null>(null);
 
   // Language & RTL
@@ -122,19 +136,47 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const setLanguage = (lang: LanguageCode) => {
     setLanguageState(lang);
     document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr';
   };
 
   useEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr';
   }, [language]);
 
   const t = translations[language];
 
   // User & Roles
   const [activeRole, setActiveRole] = useState<'client' | 'host' | 'admin'>('client');
-  const [currentUser, setCurrentUser] = useState<UserProfile>(MOCK_USERS[3]); // default Karim (client)
+  const [currentUser, setCurrentUser] = useState<UserProfile>(MOCK_USERS[3]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'signup'>('login');
+  const [isPublishModalOpen, setIsPublishModalOpen] = useState<boolean>(false);
+
+  const openAuthModal = (mode: 'login' | 'signup' = 'login') => {
+    setAuthModalMode(mode);
+    setIsAuthModalOpen(true);
+  };
+  const closeAuthModal = () => setIsAuthModalOpen(false);
+
+  const openPublishModal = () => setIsPublishModalOpen(true);
+  const closePublishModal = () => setIsPublishModalOpen(false);
+
+  const login = (userData: { name: string; email: string; phone?: string }) => {
+    setCurrentUser((prev) => ({
+      ...prev,
+      name: userData.name || 'Utilisateur Makanset',
+      email: userData.email,
+      phone: userData.phone || prev.phone,
+    }));
+    setIsLoggedIn(true);
+    setIsAuthModalOpen(false);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+  };
 
   const switchRole = (role: 'client' | 'host' | 'admin') => {
     setActiveRole(role);
@@ -143,7 +185,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } else if (role === 'admin') {
       setCurrentUser(MOCK_USERS[4]); // Admin
     } else {
-      setCurrentUser(MOCK_USERS[3]); // Karim Belkacem (client)
+      setCurrentUser(MOCK_USERS[3]); // Client
     }
   };
 
@@ -200,7 +242,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [notifications]);
 
   // Navigation Helper
-  const navigateTo = (page: 'home' | 'browse' | 'space-detail' | 'bookings', spaceId?: string) => {
+  const navigateTo = (page: 'home' | 'browse' | 'space-detail' | 'bookings' | 'host', spaceId?: string) => {
     setActivePage(page);
     if (spaceId !== undefined) {
       setSelectedSpaceId(spaceId);
@@ -590,8 +632,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setLanguage,
         t,
         currentUser,
+        isLoggedIn,
+        login,
+        logout,
         activeRole,
         switchRole,
+        isAuthModalOpen,
+        authModalMode,
+        setAuthModalMode,
+        openAuthModal,
+        closeAuthModal,
+        isPublishModalOpen,
+        openPublishModal,
+        closePublishModal,
         filters,
         setFilters,
         resetFilters,

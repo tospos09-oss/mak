@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { COMMUNE_LIST, CATEGORY_METADATA } from '../../data/mockData';
 import { ActivityCategory, AlgiersCommune } from '../../types';
-import { Search, MapPin, Calendar, Users, ChevronDown } from 'lucide-react';
+import { Search, MapPin, Calendar, ChevronDown } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
-  const { navigateTo, filters, setFilters, t } = useApp();
+  const { navigateTo, filters, setFilters, t, language } = useApp();
 
   const [selectedAct, setSelectedAct] = useState<ActivityCategory | 'all'>(filters.activity);
   const [selectedComm, setSelectedComm] = useState<AlgiersCommune | 'all'>(filters.commune);
   const [selectedDate, setSelectedDate] = useState<string>(filters.date || '');
-  const [guests, setGuests] = useState<number>(filters.guests || 1);
 
   const [actDropdownOpen, setActDropdownOpen] = useState(false);
   const [communeDropdownOpen, setCommuneDropdownOpen] = useState(false);
@@ -22,7 +21,6 @@ export const HeroSection: React.FC = () => {
       activity: selectedAct,
       commune: selectedComm,
       date: selectedDate,
-      guests,
     }));
     navigateTo('browse');
   };
@@ -87,7 +85,7 @@ export const HeroSection: React.FC = () => {
               {actDropdownOpen && (
                 <div className="absolute left-0 top-full mt-3 w-72 bg-white rounded-2xl shadow-xl border border-[#E5E2DD] p-2 z-50 animate-in fade-in slide-in-from-top-2">
                   <div className="text-[11px] font-bold text-[#6B6B6B] px-3 py-1.5 uppercase tracking-wider">
-                    Catégories d'activités
+                    {language === 'en' ? 'Activity categories' : "Catégories d'activités"}
                   </div>
                   <button
                     type="button"
@@ -99,7 +97,7 @@ export const HeroSection: React.FC = () => {
                       selectedAct === 'all' ? 'bg-[#F7F5F2] text-[#D9532B] font-bold' : 'hover:bg-slate-50'
                     }`}
                   >
-                    Toutes les activités
+                    {t.allActivities}
                   </button>
                   {activityEntries.map(([key, val]) => (
                     <button
@@ -113,8 +111,12 @@ export const HeroSection: React.FC = () => {
                         selectedAct === key ? 'bg-[#F7F5F2] text-[#D9532B] font-bold' : 'hover:bg-slate-50'
                       }`}
                     >
-                      <span>{val.label}</span>
-                      <span className="text-[10px] text-[#6B6B6B] font-normal">{val.count} lieux</span>
+                      <span>
+                        {language === 'en'
+                          ? (key === 'shooting' ? t.actPhoto : key === 'reunion' ? t.actMeeting : key === 'evenement' ? t.actEvent : key === 'tournage' ? t.actFilming : key === 'conference' ? t.actConference : key === 'formation' ? t.actWorkshop : key === 'podcast' ? t.actPodcast : t.actCoworking)
+                          : val.label}
+                      </span>
+                      <span className="text-[10px] text-[#6B6B6B] font-normal">{val.count} {language === 'en' ? 'spaces' : 'lieux'}</span>
                     </button>
                   ))}
                 </div>
@@ -147,7 +149,7 @@ export const HeroSection: React.FC = () => {
               {communeDropdownOpen && (
                 <div className="absolute left-0 top-full mt-3 w-72 max-h-64 overflow-y-auto bg-white rounded-2xl shadow-xl border border-[#E5E2DD] p-2 z-50 animate-in fade-in slide-in-from-top-2">
                   <div className="text-[11px] font-bold text-[#6B6B6B] px-3 py-1.5 uppercase tracking-wider">
-                    Communes & Quartiers
+                    {language === 'en' ? 'Districts & Neighborhoods' : 'Communes & Quartiers'}
                   </div>
                   <button
                     type="button"
@@ -159,7 +161,7 @@ export const HeroSection: React.FC = () => {
                       selectedComm === 'all' ? 'bg-[#F7F5F2] text-[#D9532B] font-bold' : 'hover:bg-slate-50'
                     }`}
                   >
-                    Toutes les communes
+                    {t.allCommunes}
                   </button>
                   {COMMUNE_LIST.map((c) => (
                     <button
@@ -180,38 +182,20 @@ export const HeroSection: React.FC = () => {
               )}
             </div>
 
-            {/* Field 3: Quand ? (Date) */}
-            <div className="flex-1 px-4 py-2 sm:py-1">
-              <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-0.5">
-                {t.searchWhen}
-              </label>
-              <div className="flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5 text-[#6B6B6B] shrink-0" />
-                <input
-                  type="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full text-xs sm:text-sm font-semibold text-[#111111] bg-transparent focus:outline-none cursor-pointer"
-                  min={new Date().toISOString().split('T')[0]}
-                />
-              </div>
-            </div>
-
-            {/* Field 4: Personnes + CTA Search */}
-            <div className="flex items-center justify-between gap-3 px-3 py-2 sm:py-1">
-              <div className="pl-1">
+            {/* Field 3: Quand ? (Date) + CTA Search */}
+            <div className="flex-1 flex items-center justify-between gap-3 px-4 py-2 sm:py-1">
+              <div className="flex-1 min-w-0">
                 <label className="block text-[11px] font-bold text-[#6B6B6B] uppercase tracking-wider mb-0.5">
-                  {t.searchGuests}
+                  {t.searchWhen}
                 </label>
                 <div className="flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-[#6B6B6B] shrink-0" />
+                  <Calendar className="w-3.5 h-3.5 text-[#6B6B6B] shrink-0" />
                   <input
-                    type="number"
-                    min="1"
-                    max="200"
-                    value={guests}
-                    onChange={(e) => setGuests(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-12 text-xs sm:text-sm font-semibold text-[#111111] bg-transparent focus:outline-none"
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-full text-xs sm:text-sm font-semibold text-[#111111] bg-transparent focus:outline-none cursor-pointer"
+                    min={new Date().toISOString().split('T')[0]}
                   />
                 </div>
               </div>
@@ -219,7 +203,7 @@ export const HeroSection: React.FC = () => {
               {/* Accent Search Button */}
               <button
                 type="submit"
-                className="h-11 px-5 sm:px-6 bg-[#D9532B] hover:bg-[#C24520] text-white font-semibold rounded-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-102 active:scale-98 shrink-0"
+                className="h-11 px-5 sm:px-6 bg-[#D9532B] hover:bg-[#C24520] text-white font-semibold rounded-full flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all hover:scale-102 active:scale-98 shrink-0 cursor-pointer"
               >
                 <Search className="w-4 h-4" />
                 <span className="text-xs sm:text-sm font-bold tracking-tight">{t.searchAction}</span>
@@ -230,18 +214,39 @@ export const HeroSection: React.FC = () => {
 
         {/* Quick activity badges under search */}
         <div className="hidden sm:flex items-center justify-center gap-2 mt-6 flex-wrap">
-          {activityEntries.slice(0, 5).map(([key, val]) => (
-            <button
-              key={key}
-              onClick={() => {
-                setFilters((prev) => ({ ...prev, activity: key }));
-                navigateTo('browse');
-              }}
-              className="px-3.5 py-1.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-medium border border-white/20 transition-all hover:scale-105"
-            >
-              {val.label}
-            </button>
-          ))}
+          {activityEntries.slice(0, 5).map(([key, val]) => {
+            const label = language === 'en'
+              ? (key === 'shooting' ? t.actPhoto : key === 'reunion' ? t.actMeeting : key === 'evenement' ? t.actEvent : key === 'tournage' ? t.actFilming : key === 'conference' ? t.actConference : key === 'formation' ? t.actWorkshop : key === 'podcast' ? t.actPodcast : t.actCoworking)
+              : val.label;
+            return (
+              <button
+                key={key}
+                onClick={() => {
+                  setFilters((prev) => ({ ...prev, activity: key }));
+                  navigateTo('browse');
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md text-white text-xs font-medium border border-white/20 transition-all hover:scale-105"
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Landing Page Trust Indicators */}
+        <div className="hidden md:flex items-center justify-center gap-6 mt-5 text-[11px] text-white/75 font-medium">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D9532B]" />
+            {t.trustVerified}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D9532B]" />
+            {t.trustFlexible}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D9532B]" />
+            {t.trustPricing}
+          </span>
         </div>
       </div>
 
@@ -251,11 +256,11 @@ export const HeroSection: React.FC = () => {
         onClick={() => {
           window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
         }}
-        aria-label="Défiler vers les espaces"
+        aria-label="Scroll down"
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center text-white/70 hover:text-white transition-colors cursor-pointer group"
       >
         <span className="text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase mb-1 opacity-70 group-hover:opacity-100 transition-opacity">
-          Explorer
+          {t.explorePrompt}
         </span>
         <ChevronDown className="w-4 h-4 animate-bounce text-white/90" />
       </button>

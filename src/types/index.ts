@@ -192,4 +192,4 @@ export interface NotificationItem {
   bookingId?: string;
 }
 
-export type LanguageCode = 'fr' | 'ar' | 'en';
+export type LanguageCode = 'fr' | 'en';
